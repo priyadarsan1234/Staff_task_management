@@ -39,6 +39,62 @@ class _WorkdelayState extends State<Workdelay> {
       throw Exception('Failed to load data');
     }
   }
+Future<void> redflag(String id) async {
+    final String updateUrl =
+        'https://creativecollege.in/Flutter/Work/redflag.php';
+    try {
+      final response = await http.post(
+        Uri.parse(updateUrl),
+        body: {'ID': id},
+      );
+
+      // Check the response status code
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+        final responseData = json.decode(response.body);
+
+        // Check if the API responded with a success message
+        if (responseData['success'] == true) {
+          // Show success message using SnackBar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${responseData['message']}'),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          // Optionally refresh the data
+          setState(() {
+            _data = fetchData(); // Refresh data to reflect changes
+          });
+        } else {
+          // Show failure message using SnackBar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${responseData['message']}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } else {
+        // Show HTTP error message using SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${response.statusCode}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      // Show exception message using SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -92,15 +148,15 @@ class _WorkdelayState extends State<Workdelay> {
                         leading: IconButton(
                           icon: Icon(Icons.flag, size: 23.0, color: Colors.red),
                           onPressed: () {
-                            // Define what happens when the button is pressed
-                            print('IconButton pressed');
+                            final id = item['ID'];
+                            redflag(id);
                           },
                         ),
                         title: Text(
                           item['TITLE'] ?? 'No Title',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 13.0,
+                            fontSize: 11.0,
                           ),
                         ),
                         subtitle: Text(
