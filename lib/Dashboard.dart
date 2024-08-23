@@ -12,6 +12,8 @@ import 'package:flutter_application_1/student_attendance.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'mobile/mob_Profile.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -24,6 +26,9 @@ class _DashboardState extends State<Dashboard> {
   final _color1 = const Color(0xFFC21E56);
   XFile? _pickedImage;
   late String pickedImagePath;
+  Map<String, dynamic>? data;
+  bool isLoading = true;
+  String error = '';
 
   Future<void> loadImagePath() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,10 +41,39 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  Future<void> fetchData(String id) async {
+    final url =
+        'https://creativecollege.in/Flutter/Work/singledata_redflag.php?id=$id';
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // If the server returns an OK response, parse the JSON
+        setState(() {
+          data = jsonDecode(response.body);
+          isLoading = false;
+        });
+      } else {
+        // If the server did not return a 200 OK response, throw an exception
+        setState(() {
+          error = 'Failed to load data';
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      // Handle any errors that occur
+      setState(() {
+        error = 'Error: $e';
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     loadImagePath();
+    fetchData("Bhabani@CTC");
   }
 
   Widget _buildCard(IconData icon, String text, VoidCallback onTap) {
@@ -84,22 +118,64 @@ class _DashboardState extends State<Dashboard> {
         actions: <Widget>[
           Container(
             margin: const EdgeInsets.only(right: 16.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Profile(),
+            child: Row(
+              children: <Widget>[
+                Row(
+                  children: [
+                    Card(
+                      color: Colors.white, // Background color of the card
+                      elevation: 4.0, // Shadow intensity
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(25.0), // Rounded corners
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(
+                            8.0), // Padding inside the card
+                        child: Row(
+                          mainAxisSize: MainAxisSize
+                              .min, // Size the row to fit its content
+                          children: [
+                            Text(
+                              '${data != null && data!.containsKey('COUNT') ? data!['COUNT'] : '0'}',
+                              style: const TextStyle(
+                                color: Colors
+                                    .black, // Changed to black for better visibility on white background
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            const Icon(
+                              Icons.flag,
+                              color: Colors.red,
+                              size: 30,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Profile(),
+                      ),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundImage: _pickedImage == null
+                        ? const AssetImage('assets/images/technocart.png')
+                        : FileImage(File(_pickedImage!.path))
+                            as ImageProvider<Object>?,
                   ),
-                );
-              },
-              child: CircleAvatar(
-                radius: 24,
-                backgroundImage: _pickedImage == null
-                    ? const AssetImage('assets/images/technocart.png')
-                    : FileImage(File(_pickedImage!.path))
-                        as ImageProvider<Object>?,
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -188,7 +264,7 @@ class _DashboardState extends State<Dashboard> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DataScreen(),
+                builder: (context) => Attendance(),
               ),
             );
           }),
@@ -264,7 +340,8 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 );
               }),
-              _buildCard(Icons.present_to_all_rounded, 'Student Attendance', () {
+              _buildCard(Icons.present_to_all_rounded, 'Student Attendance',
+                  () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

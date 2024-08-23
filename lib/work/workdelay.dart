@@ -104,10 +104,25 @@ Future<void> redflag(String id) async {
 
   @override
   Widget build(BuildContext context) {
+    const _color1 = Color.fromARGB(255, 194, 30, 86);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Data from API'),
-        backgroundColor: Colors.blueAccent,
+      appBar:  AppBar(
+        backgroundColor: _color1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        title: Text(
+          'Admin Panel',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontFamily: 'Times New Roman',
+          ),
+        ),
       ),
       body: FutureBuilder<Map<String, Map<String, dynamic>>>(
         future: _data,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/staff_leave.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
@@ -117,7 +116,6 @@ class _StaffListState extends State<Staff_Attendanance> {
 
   @override
   Widget build(BuildContext context) {
-    const _color2 = Color(0xFFF09FDE);
     const _color1 = Color(0xFFC21E56);
 
     return Scaffold(

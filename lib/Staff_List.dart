@@ -39,7 +39,6 @@ class _StaffListState extends State<StaffList> {
 
   @override
   Widget build(BuildContext context) {
-    const _color1 = Color.fromARGB(255, 194, 30, 86);
 
     return Scaffold(
       

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Admin_Contact.dart';
 import 'package:flutter_application_1/Admin_DashBoard.dart';
-import 'package:flutter_application_1/Admin_DateWise_Work_View.dart';
-import 'package:flutter_application_1/Admin_leave_Mgmt.dart';
 import 'package:flutter_application_1/Staff_List.dart';
-import 'package:flutter_application_1/Add_staff.dart';
 import 'package:flutter_application_1/Total_Present.dart';
-import 'package:flutter_application_1/del_staff.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

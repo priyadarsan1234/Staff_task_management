@@ -73,7 +73,6 @@ class _Admin_ADD_WORK_State extends State<Admin_ADD_WORK> {
   @override
   Widget build(BuildContext context) {
     const _color1 = Color.fromARGB(255, 194, 30, 86);
-    const _color2 = Color.fromARGB(255, 239, 83, 80);
 
     return Scaffold(
       appBar: AppBar(

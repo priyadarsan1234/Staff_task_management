@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart'; // For date formatting
 
-class DataScreen extends StatefulWidget {
+class Attendance extends StatefulWidget {
   @override
-  _DataScreenState createState() => _DataScreenState();
+  _AttendanceState createState() => _AttendanceState();
 }
 
-class _DataScreenState extends State<DataScreen> {
+class _AttendanceState extends State<Attendance> {
   String selectedCourse = 'BBA';
   String selectedSemesterGroup = '1st';
   Map<String, dynamic>? allData;
@@ -154,20 +154,25 @@ Future<void> _submitAttendance() async {
 
   @override
   Widget build(BuildContext context) {
+    const _color1 = Color.fromARGB(255, 194, 30, 86);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Batch Data'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Center(
-              child: Text(
-                DateFormat('dd MMMM yyyy').format(currentDate),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
+        backgroundColor: _color1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
           ),
-        ],
+        ),
+        title: Text(
+          'Admin Panel',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontFamily: 'Times New Roman',
+          ),
+        ),
       ),
       body: Column(
         children: [

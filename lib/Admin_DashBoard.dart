@@ -1,14 +1,13 @@
-import 'dart:io';
 import 'package:flutter_application_1/admin_add_work.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Add_staff.dart';
 import 'package:flutter_application_1/Admin_Contact.dart';
 import 'package:flutter_application_1/Admin_DateWise_Work_View.dart';
 import 'package:flutter_application_1/Admin_leave_Mgmt.dart';
+import 'package:flutter_application_1/attendance/attendance.dart';
 import 'package:flutter_application_1/del_staff.dart';
-import 'package:flutter_application_1/student_attendance.dart';
+import 'package:flutter_application_1/work/showredflag.dart';
 import 'package:flutter_application_1/work/workdelay.dart';
-import 'package:image_picker/image_picker.dart';
 
 
 class Admin_Dashboard extends StatefulWidget {
@@ -19,8 +18,6 @@ class Admin_Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Admin_Dashboard> {
-  final _color1 = const Color(0xFFC21E56);
-  XFile? _pickedImage;
   late String pickedImagePath;
 
   Widget _buildCard(IconData icon, String text, VoidCallback onTap) {
@@ -119,7 +116,7 @@ class _DashboardState extends State<Admin_Dashboard> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => StudentAttendance(),
+                builder: (context) => Attendance(),
               ),
             );
           }),
@@ -136,6 +133,14 @@ class _DashboardState extends State<Admin_Dashboard> {
               context,
               MaterialPageRoute(
                 builder: (context) => Workdelay(),
+              ),
+            );
+          }),
+          _buildCard(Icons.assignment_add, 'Red Flag Faculty', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RedFlagPage(),
               ),
             );
           }),
@@ -199,7 +204,7 @@ class _DashboardState extends State<Admin_Dashboard> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => StudentAttendance(),
+                builder: (context) => Attendance(),
               ),
             );
           }),
@@ -216,6 +221,14 @@ class _DashboardState extends State<Admin_Dashboard> {
               context,
               MaterialPageRoute(
                 builder: (context) => Workdelay(),
+              ),
+            );
+          }),
+          _buildCard(Icons.assignment_add, 'Red Flag Faculty', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RedFlagPage(),
               ),
             );
           }),
