@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Report_upload.dart';
 import 'package:flutter_application_1/attendance/attendance.dart';
+import 'package:flutter_application_1/feedback/stafffeedback.dart';
 import 'package:flutter_application_1/mobile/Staff_Attendance.dart';
 import 'package:flutter_application_1/mobile/detailsMobile.dart';
 import 'package:flutter_application_1/mobile/mob_add_task.dart';
@@ -268,6 +269,14 @@ class _DashboardState extends State<Dashboard> {
               ),
             );
           }),
+          _buildCard(Icons.present_to_all_rounded, 'Feedback', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TeacherFeedbackpage(),
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -346,6 +355,15 @@ class _DashboardState extends State<Dashboard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => StudentAttendance(),
+                  ),
+                );
+              }),
+              _buildCard(Icons.present_to_all_rounded, 'Feedback',
+                  () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TeacherFeedbackpage(),
                   ),
                 );
               }),

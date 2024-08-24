@@ -102,6 +102,7 @@ Future<void> _submitAttendance() async {
       'present': student['present'] ? 1 : 0,
       'date': DateFormat('yyyy-MM-dd').format(currentDate),
       'semester_group': selectedSemesterGroup,
+      'course':selectedCourse,
     };
   }).toList();
 
@@ -307,7 +308,7 @@ Future<void> _submitAttendance() async {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: _submitAttendance,
-              child: Text('Submit Attendance'),
+              child: Text('Submit '),
             ),
           ),
         ],

@@ -23,7 +23,6 @@ class _StaffListState extends State<StaffList> {
     if (response.statusCode == 200) {
       setState(() {
         items = json.decode(response.body);
-        // Sort the items alphabetically by 'name'
         items.sort((a, b) => a['name'].compareTo(b['name']));
       });
     } else {
@@ -39,15 +38,15 @@ class _StaffListState extends State<StaffList> {
 
   @override
   Widget build(BuildContext context) {
-
+    const _color1 = Color.fromARGB(255, 194, 30, 86);
     return Scaffold(
       
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
           return FadeInDown(
-            duration: Duration(milliseconds: 200),
-            delay: Duration(milliseconds: 50 * index),
+            duration: const Duration(milliseconds: 300),
+            delay: Duration(milliseconds: 100 * index),
             child: StaffCard(item: items[index]),
           );
         },
@@ -64,71 +63,89 @@ class StaffCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(7),
+      margin: const EdgeInsets.all(8),
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
         child: ListTile(
-          title: Text(item['name']),
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            item['name'],
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 194, 30, 86),
+            ),
+          ),
           trailing: ElevatedButton(
             onPressed: () {
-              showAdaptiveDialog(
+              showDialog(
                 context: context,
                 builder: (context) {
-                  return Container(
-                    child: AlertDialog(
-                      title: Text(
-                        item['name'] + '\nWork Status & Monthly Report',
-                      ),
-                      actions: [
-                        Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              Details_admin_web(
-                                            name: item['name'],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text('Status'),
-                                  ),
-                                  Expanded(child: Container()),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Report_Retrive(
-                                            id: item['user_name'],
-                                            name: item['name'],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text('Report'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                  return AlertDialog(
+                    title: Text(
+                      '${item['name']}\nWork Status & Monthly Report',
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
+                    content: const SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          Text('Select an option to view details or report.'),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Details_admin_web(
+                                name: item['name'],
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 194, 30, 86), // Updated parameter
+                        ),
+                        child: const Text('Status'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Report_Retrive(
+                                id: item['user_name'],
+                                name: item['name'],
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 194, 30, 86), // Updated parameter
+                        ),
+                        child: const Text('Report'),
+                      ),
+                    ],
                   );
                 },
               );
             },
-            child: Text('Show Status'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 194, 30, 86), // Updated parameter
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+            child: const Text('Show Status',style: TextStyle(color: Colors.white),),
           ),
         ),
       ),

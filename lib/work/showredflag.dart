@@ -173,7 +173,7 @@ class _RedFlagPageState extends State<RedFlagPage> {
                                 SizedBox(height: 4.0),
                                 Text(
                                   '${item['LAST_FLAG_DATE'] ?? 'No data'}',
-                                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                                  style: TextStyle(color: Colors.grey[600], fontSize: 14,fontFamily: 'Times New Roman',),
                                 ),
                               ],
                             ),
@@ -181,10 +181,10 @@ class _RedFlagPageState extends State<RedFlagPage> {
                           SizedBox(width: 16.0),
                           Text(
                             '${item['COUNT']}',
-                            style: TextStyle(color: Colors.blueAccent, fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Colors.blueAccent, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Times New Roman',),
                           ),
                           IconButton(
-                            icon: Icon(Icons.close_outlined, color: Colors.red, size: 24),
+                            icon: Icon(Icons.close_outlined, color: Colors.red, size: 24,),
                             onPressed: () => _clearFlag(item['ID']),
                           ),
                         ],

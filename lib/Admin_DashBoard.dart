@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Admin_DateWise_Work_View.dart';
 import 'package:flutter_application_1/Admin_leave_Mgmt.dart';
 import 'package:flutter_application_1/attendance/attendance.dart';
 import 'package:flutter_application_1/del_staff.dart';
+import 'package:flutter_application_1/feedback/feedbackpage.dart';
 import 'package:flutter_application_1/work/showredflag.dart';
 import 'package:flutter_application_1/work/workdelay.dart';
 
@@ -144,6 +145,15 @@ class _DashboardState extends State<Admin_Dashboard> {
               ),
             );
           }),
+
+          _buildCard(Icons.assignment_add, 'Feedback', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Feedbackpage(),
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -229,6 +239,14 @@ class _DashboardState extends State<Admin_Dashboard> {
               context,
               MaterialPageRoute(
                 builder: (context) => RedFlagPage(),
+              ),
+            );
+          }),
+          _buildCard(Icons.assignment_add, 'Feedback', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Feedbackpage(),
               ),
             );
           }),
